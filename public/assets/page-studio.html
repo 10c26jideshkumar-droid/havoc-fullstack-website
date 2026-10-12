@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" data-precedence="default"/><link rel="stylesheet" href="/assets/styles-Dn180MKQ.css" data-precedence="default"/><title>Creator studio — HAVOC</title><meta property="og:type" content="website"/><meta name="twitter:card" content="summary_large_image"/><meta name="description" content="Your creator dashboard: portfolio, reviews, packages, skills, workspace and brand invites."/><meta property="og:title" content="Creator studio — HAVOC"/><meta property="og:description" content="Manage your portfolio, packages and brand invites."/><link rel="modulepreload" href="/assets/index-7uE8-P6n.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-hePW80VL.js"/><link rel="modulepreload" href="/assets/jsx-runtime-DE3RlOCf.js"/><link rel="modulepreload" href="/assets/bundle-mjs-DCSVcwza.js"/><link rel="modulepreload" href="/assets/creators._slug-CfzOrYAg.js"/><link rel="modulepreload" href="/assets/lazyRouteComponent-Bbww4TE5.js"/><link rel="modulepreload" href="/assets/link-CZ6lE1C5.js"/><link rel="modulepreload" href="/assets/useNavigate-T4S_KIDW.js"/><link rel="modulepreload" href="/assets/dist-BbxQv_7Q.js"/><link rel="modulepreload" href="/assets/preload-helper-Czpn1I53.js"/><link rel="modulepreload" href="/assets/data-Cpnfo5Fm.js"/><link rel="modulepreload" href="/assets/studio-C2ddXwba.js"/><link rel="modulepreload" href="/assets/CreatorSections-dECCnDAU.js"/><link rel="modulepreload" href="/assets/textarea-DIvQJCeA.js"/><link rel="modulepreload" href="/assets/progress-avALYn72.js"/><link rel="modulepreload" href="/assets/label-DrO47ljn.js"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<style>
+	#lovable-badge {
+		--badge-bg: #1b1b1b;
+		--badge-text: #c5c1b9;
+		--badge-text-hover: #dcdad5;
+		--badge-radius: 6px;
+		--badge-padding: 8px;
+		--badge-gap: 6px;
+		--badge-shadow: 
+			0 0 0 1px rgba(0, 0, 0, 0.88),
+			0 1px 0 0 rgba(0, 0, 0, 0.04),
+			0 2px 2px -1px rgba(0, 0, 0, 0.08),
+			0 4px 4px -2px rgba(0, 0, 0, 0.08),
+			0 8px 8px -4px rgba(0, 0, 0, 0.08),
+			0 16px 16px -8px rgba(0, 0, 0, 0.08);
+		--badge-transition-duration: 0.2s;
+		--badge-transition-easing: cubic-bezier(0.16, 1, 0.32, 1);
+		--focus-color: #575ECF;
+		--focus-offset: 2px;
+		--focus-width: 2px;
+		
+		position: fixed;
+		bottom: 12px;
+		right: 12px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		z-index: 1000000;
+		background-color: var(--badge-bg) !important;
+		color: var(--badge-text) !important;
+		border-radius: var(--badge-radius);
+		box-shadow: var(--badge-shadow) !important;
+		font-size: 12px;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-weight: 400 !important;
+		text-transform: none !important;
+		font-feature-settings: normal !important;
+		transform: translateZ(0);
+		will-change: transform, opacity;
+		transition: opacity var(--badge-transition-duration) var(--badge-transition-easing);
+	}
+
+	#lovable-badge.closing {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	#lovable-badge-cta {
+		display: flex;
+		align-items: baseline;
+		gap: var(--badge-gap);
+		box-sizing: border-box;
+		padding: 4px var(--badge-padding) 0;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		white-space: nowrap;
+		border-radius: var(--badge-radius) 0 0 var(--badge-radius);
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-cta:hover {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--badge-text-hover);
+	}
+
+	#lovable-badge-cta:active {
+		transform: scale(0.98);
+	}
+
+	#lovable-badge-cta:focus {
+		outline: none;
+	}
+
+	#lovable-badge-cta:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: var(--focus-offset);
+		z-index: 1;
+	}
+
+	#lovable-badge-text {
+		line-height: 1;
+	}
+
+	/* The wordmark baseline sits at y=12 of the 16px logo; an empty 12px box
+	   makes that the flex baseline so the text aligns to it on any system font. */
+	#lovable-badge-logo {
+		position: relative;
+		display: block;
+		width: 52px;
+		height: 12px;
+	}
+
+	#lovable-badge-logo svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#lovable-badge-divider {
+		width: 1px;
+		height: 24px;
+		background-color: rgba(255, 255, 255, 0.04);
+		flex-shrink: 0;
+	}
+
+	#lovable-badge-close {
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		min-height: 24px;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0 var(--badge-radius) var(--badge-radius) 0;
+		flex-shrink: 0;
+		transition: 
+			background-color var(--badge-transition-duration) ease,
+			transform 0.1s ease;
+	}
+
+	#lovable-badge-close:hover {
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	#lovable-badge-close:active {
+		transform: scale(0.92);
+	}
+
+	#lovable-badge-close:focus {
+		outline: none;
+	}
+
+	#lovable-badge-close:focus-visible {
+		outline: var(--focus-width) solid var(--focus-color);
+		outline-offset: calc(var(--focus-offset) * -1);
+		z-index: 1;
+	}
+
+	#lovable-badge-close svg path {
+		fill: var(--badge-text);
+		transition: fill var(--badge-transition-duration) ease;
+	}
+
+	#lovable-badge-close:hover svg path {
+		fill: var(--badge-text-hover);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		#lovable-badge,
+		#lovable-badge-cta,
+		#lovable-badge-close,
+		#lovable-badge-close svg path {
+			transition: none;
+		}
+		
+		#lovable-badge-cta:active,
+		#lovable-badge-close:active {
+			transform: none;
+		}
+	}
+
+	@media (prefers-contrast: high) {
+		#lovable-badge {
+			--badge-bg: #000;
+			--badge-text: #fff;
+			--badge-text-hover: #fff;
+			border: 2px solid currentColor;
+		}
+		
+		#lovable-badge-cta:focus-visible,
+		#lovable-badge-close:focus-visible {
+			outline-width: 3px;
+		}
+	}
+</style>
+<meta name="twitter:title" content="Creator studio — HAVOC"><meta name="twitter:description" content="Manage your portfolio, packages and brand invites."><meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_64nx4xgnyq9ssrv7y4m91t6a27/d10659e59af6d74443076c67333c098e_1791794496868.png"><meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/lovp_64nx4xgnyq9ssrv7y4m91t6a27/d10659e59af6d74443076c67333c098e_1791794496868.png"></head><body><header class="fixed inset-x-0 top-3 z-50 px-3"><div class="mx-auto flex max-w-6xl items-center justify-between gap-3"><a class="glass flex items-center gap-2 rounded-2xl px-4 py-2.5 animate-notify" href="/"><span class="grid h-7 w-7 place-items-center rounded-lg bg-gradient-brand text-sm font-extrabold text-primary-foreground">H</span><span class="font-extrabold tracking-tight">HAVOC</span></a><nav class="hidden items-center gap-2 md:flex"><a class="glass group relative flex items-center gap-2.5 rounded-2xl py-2 pl-2 pr-4 transition-all hover:-translate-y-0.5 animate-notify" style="animation-delay:0.1s" href="/creators"><span class="relative grid h-8 w-8 place-items-center rounded-xl bg-accent text-accent-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-compass h-4 w-4" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg><span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5"><span class="absolute inset-0 rounded-full bg-primary animate-ping-dot"></span><span class="absolute inset-0 rounded-full border-2 border-card bg-primary"></span></span></span><span class="flex flex-col leading-tight"><span class="text-sm font-semibold">Explore Creators</span><span class="text-[11px] text-muted-foreground">6 new this week</span></span></a><a class="glass group relative flex items-center gap-2.5 rounded-2xl py-2 pl-2 pr-4 transition-all hover:-translate-y-0.5 animate-notify" style="animation-delay:0.22s" href="/brand"><span class="relative grid h-8 w-8 place-items-center rounded-xl bg-accent text-accent-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase h-4 w-4" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg><span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5"><span class="absolute inset-0 rounded-full bg-primary animate-ping-dot"></span><span class="absolute inset-0 rounded-full border-2 border-card bg-primary"></span></span></span><span class="flex flex-col leading-tight"><span class="text-sm font-semibold">For Brands</span><span class="text-[11px] text-muted-foreground">AI matches ready</span></span></a><a class="glass group relative flex items-center gap-2.5 rounded-2xl py-2 pl-2 pr-4 transition-all hover:-translate-y-0.5 animate-notify ring-2 ring-primary/40" style="animation-delay:0.33999999999999997s" href="/studio" data-status="active" aria-current="page"><span class="relative grid h-8 w-8 place-items-center rounded-xl bg-accent text-accent-foreground"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette h-4 w-4" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle></svg><span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5"><span class="absolute inset-0 rounded-full bg-primary animate-ping-dot"></span><span class="absolute inset-0 rounded-full border-2 border-card bg-primary"></span></span></span><span class="flex flex-col leading-tight"><span class="text-sm font-semibold">For Creators</span><span class="text-[11px] text-muted-foreground">2 invites waiting</span></span></a></nav><div class="glass flex items-center gap-1 rounded-2xl p-1.5 animate-notify" style="animation-delay:0.5s"><a class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs" href="/sign-in">Sign in</a><a class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 px-3 text-xs rounded-xl" href="/get-started">Get started</a></div></div><nav class="mx-auto mt-2 flex max-w-6xl gap-2 overflow-x-auto md:hidden"><a class="glass flex shrink-0 items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-semibold" href="/creators"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-compass h-3.5 w-3.5 text-primary" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"></path></svg>Explore Creators</a><a class="glass flex shrink-0 items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-semibold" href="/brand"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase h-3.5 w-3.5 text-primary" aria-hidden="true"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>For Brands</a><a class="glass flex shrink-0 items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-semibold active" href="/studio" data-status="active" aria-current="page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette h-3.5 w-3.5 text-primary" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>For Creators</a></nav></header><main class="pt-24 md:pt-24"><!--$--><div class="mx-auto max-w-6xl px-4"><div class="flex flex-wrap items-center justify-between gap-4"><div class="flex items-center gap-4"><span class="grid h-16 w-16 place-items-center rounded-2xl bg-gradient-brand text-2xl font-bold text-primary-foreground">A</span><div><h1 class="text-3xl font-extrabold">Anika Rao</h1><p class="text-sm text-muted-foreground">Voice AI engineer<!-- --> · <!-- -->Bengaluru, India</p></div></div><div class="flex gap-2"><a class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2" href="/creators/anika-rao">View public profile</a><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-4 w-4" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>Add work</button></div></div><div dir="ltr" data-orientation="horizontal" class="mt-8"><div role="tablist" aria-orientation="horizontal" class="items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground flex h-auto flex-wrap" tabindex="-1" data-orientation="horizontal" style="outline:none"><button type="button" role="tab" aria-selected="true" aria-controls="radix-_R_iiq_-content-dashboard" data-state="active" id="radix-_R_iiq_-trigger-dashboard" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">Dashboard</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-_R_iiq_-content-portfolio" data-state="inactive" id="radix-_R_iiq_-trigger-portfolio" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">My portfolio</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-_R_iiq_-content-workspace" data-state="inactive" id="radix-_R_iiq_-trigger-workspace" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">Workspace</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-_R_iiq_-content-reviews" data-state="inactive" id="radix-_R_iiq_-trigger-reviews" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">Reviews</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-_R_iiq_-content-packages" data-state="inactive" id="radix-_R_iiq_-trigger-packages" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">Packages</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-_R_iiq_-content-skills" data-state="inactive" id="radix-_R_iiq_-trigger-skills" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow" tabindex="-1" data-orientation="horizontal" data-radix-collection-item="">Skills</button></div><div data-state="active" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-dashboard" id="radix-_R_iiq_-content-dashboard" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6 space-y-6" style="animation-duration:0s"><div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><div class="rounded-2xl border bg-card p-5 shadow-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye h-5 w-5 text-primary" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg><p class="mt-3 text-sm text-muted-foreground">Profile views</p><p class="text-3xl font-extrabold">2,384</p><p class="text-xs text-muted-foreground">+12% this week</p></div><div class="rounded-2xl border bg-card p-5 shadow-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-inbox h-5 w-5 text-primary" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg><p class="mt-3 text-sm text-muted-foreground">Brand invites</p><p class="text-3xl font-extrabold">2</p><p class="text-xs text-muted-foreground">2 pending</p></div><div class="rounded-2xl border bg-card p-5 shadow-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet h-5 w-5 text-primary" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg><p class="mt-3 text-sm text-muted-foreground">Earnings (Oct)</p><p class="text-3xl font-extrabold">$4,120</p><p class="text-xs text-muted-foreground">+$860 vs Sep</p></div><div class="rounded-2xl border bg-card p-5 shadow-card"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star h-5 w-5 text-primary" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg><p class="mt-3 text-sm text-muted-foreground">Rating</p><p class="text-3xl font-extrabold">4.9</p><p class="text-xs text-muted-foreground">2 reviews</p></div></div><div class="rounded-2xl border bg-card p-5 shadow-card"><h3 class="font-bold">Interview invitations</h3><div class="mt-3 divide-y"><div class="flex flex-wrap items-center justify-between gap-3 py-3"><div><p class="font-semibold">Northwind Bank</p><p class="text-xs text-muted-foreground">2026-10-20<!-- --> at <!-- -->15:00<!-- --> · <!-- -->Follow-up on the loan helpline phase 2.</p></div><div class="flex gap-2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs">Accept</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">Decline</button></div></div><div class="flex flex-wrap items-center justify-between gap-3 py-3"><div><p class="font-semibold">Glow Labs</p><p class="text-xs text-muted-foreground">2026-10-22<!-- --> at <!-- -->11:30<!-- --> · <!-- -->Interested in a voice skincare advisor.</p></div><div class="flex gap-2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-8 rounded-md px-3 text-xs">Accept</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 rounded-md px-3 text-xs">Decline</button></div></div></div></div><div class="rounded-2xl border bg-card p-5 shadow-card"><h3 class="font-bold">Profile strength</h3><div aria-valuemax="100" aria-valuemin="0" role="progressbar" data-state="indeterminate" data-max="100" class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20 mt-3"><div data-state="indeterminate" data-max="100" class="h-full w-full flex-1 bg-primary transition-all" style="transform:translateX(-18%)"></div></div><p class="mt-2 text-sm text-muted-foreground">Tip: add one more video case study to reach 100%.</p></div></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-portfolio" hidden="" id="radix-_R_iiq_-content-portfolio" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-workspace" hidden="" id="radix-_R_iiq_-content-workspace" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-reviews" hidden="" id="radix-_R_iiq_-content-reviews" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-packages" hidden="" id="radix-_R_iiq_-content-packages" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-_R_iiq_-trigger-skills" hidden="" id="radix-_R_iiq_-content-skills" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"></div></div></div><script>(function(a,f){let l;try{l=JSON.parse(sessionStorage.getItem(a)||"{}")}catch{return}const n=l?.[f||history.state?.__TSR_key];let c=!1;for(const t in n){const e=n[t],o=e?.scrollX,s=e?.scrollY;if(Number.isFinite(o)&&Number.isFinite(s)){if(t==="window")scrollTo(o,s),c=!0;else if(t)try{const r=document.querySelector(t);r&&(r.scrollLeft=o,r.scrollTop=s)}catch{}}}if(c)return;const i=location.hash.slice(1);if(i){const t=history.state?.__hashScrollIntoViewOptions??!0;if(t){const e=document.getElementById(i);e&&e.scrollIntoView(t)}return}scrollTo(0,0)})("tsr-scroll-restoration-v1_3");document.currentScript.remove()</script><!--/$--></main><footer class="mt-24 border-t py-8 text-center text-xs text-muted-foreground">HAVOC · Creators and projects shown are sample data for this prototype.</footer><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><script data-tsr-stream-part="">(self.$R=self.$R||{})["tsr"]=[];self.$_TSR={h(){this.hydrated=!0,this.c()},e(){this.streamEnded=!0,this.c()},c(){this.hydrated&&this.streamEnded&&(delete self.$_TSR,delete self.$R.tsr)},p(e){this.initialized?e():this.buffer.push(e)},buffer:[]};$_TSR.router=($R=>$R[0]={manifest:$R[1]={routes:$R[2]={__root__:$R[3]={preloads:$R[4]=["/assets/index-7uE8-P6n.js","/assets/rolldown-runtime-hePW80VL.js","/assets/jsx-runtime-DE3RlOCf.js","/assets/bundle-mjs-DCSVcwza.js","/assets/creators._slug-CfzOrYAg.js","/assets/lazyRouteComponent-Bbww4TE5.js","/assets/link-CZ6lE1C5.js","/assets/useNavigate-T4S_KIDW.js","/assets/dist-BbxQv_7Q.js","/assets/preload-helper-Czpn1I53.js","/assets/data-Cpnfo5Fm.js"],scripts:$R[5]=[$R[6]={attrs:$R[7]={type:"module",async:!0,src:"/assets/index-7uE8-P6n.js"}}]},"/studio":$R[8]={preloads:$R[9]=["/assets/studio-C2ddXwba.js","/assets/CreatorSections-dECCnDAU.js","/assets/textarea-DIvQJCeA.js","/assets/progress-avALYn72.js","/assets/label-DrO47ljn.js"]}}},matches:$R[10]=[$R[11]={i:"__root__ ",u:1791820557412,s:"success",ssr:!0},$R[12]={i:" studio studio",u:1791820557412,s:"success",ssr:!0}]})($R["tsr"]);$_TSR.e();{let s=document.currentScript,p;while((p=s.previousElementSibling)&&p.hasAttribute('data-tsr-stream-part'))p.remove();s.remove()}</script><script type="module" async="" src="/assets/index-7uE8-P6n.js"></script><script>document.currentScript.remove();/*$tsr-stream-boundary*/</script>
+
+
+</body></html>

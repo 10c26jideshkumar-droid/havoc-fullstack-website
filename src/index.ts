@@ -85,17 +85,36 @@ export const createApp = (): Application => {
   const publicDir = path.join(__dirname, '..', 'public');
   app.use(express.static(publicDir));
 
-  // SPA Fallback: Serve frontend for non-API routes
+  // SPA & SSR Route Handler: Serve exact page for route or fallback to index.html
   app.get('*', (req: Request, res: Response, next) => {
     if (req.path.startsWith('/api')) {
       return next();
     }
+
+    const cleanPath = req.path.replace(/^\/|\/$/g, '');
+
+    // 1. Creator Profile Pages (/creators/:slug)
+    if (cleanPath.startsWith('creators/')) {
+      const slug = cleanPath.split('/')[1];
+      const profilePath = path.join(publicDir, 'assets', `creators-${slug}.html`);
+      if (fs.existsSync(profilePath)) {
+        return res.sendFile(profilePath);
+      }
+    }
+
+    // 2. Specific App Routes (/creators, /brand, /studio, /sign-in, /get-started)
+    const routePage = path.join(publicDir, 'assets', `page-${cleanPath}.html`);
+    if (cleanPath && fs.existsSync(routePage)) {
+      return res.sendFile(routePage);
+    }
+
+    // 3. Fallback to Root index.html
     const indexPath = path.join(publicDir, 'index.html');
     if (fs.existsSync(indexPath)) {
-      res.sendFile(indexPath);
-    } else {
-      next();
+      return res.sendFile(indexPath);
     }
+
+    next();
   });
 
   // 404 Route Handler for unmatched API endpoints
