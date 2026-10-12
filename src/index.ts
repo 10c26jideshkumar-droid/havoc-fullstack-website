@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from 'express';
+import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -74,7 +76,24 @@ export const createApp = (): Application => {
   app.use('/api/briefs', briefRoutes);
   app.use('/api', pickRoutes);
 
-  // 404 Route Handler
+  // Serve Frontend Static Assets
+  const publicDir = path.join(__dirname, '..', 'public');
+  app.use(express.static(publicDir));
+
+  // SPA Fallback: Serve frontend for non-API routes
+  app.get('*', (req: Request, res: Response, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    const indexPath = path.join(publicDir, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      next();
+    }
+  });
+
+  // 404 Route Handler for unmatched API endpoints
   app.use((req: Request, res: Response) => {
     res.status(404).json({
       success: false,
