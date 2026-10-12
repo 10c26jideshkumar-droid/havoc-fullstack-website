@@ -248,4 +248,61 @@ describe('HAVOC Production API Integration Test Suite', () => {
 
     server.close();
   });
+
+  it('11. GET /api/brands should return at least 5 distinct brand profiles', async () => {
+    const server = app.listen(0);
+    const port = server.address().port;
+
+    const res = await fetch(`http://localhost:${port}/api/brands`);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.success, true);
+    assert.ok(data.count >= 5, `Expected at least 5 brands, got ${data.count}`);
+    assert.ok(data.data.some((b: any) => b.name === 'Lumen Beauty'));
+    assert.ok(data.data.some((b: any) => b.name === 'Northwind Bank'));
+    assert.ok(data.data.some((b: any) => b.name === 'Zesto Foods'));
+    assert.ok(data.data.some((b: any) => b.name === 'Kira Studio'));
+    assert.ok(data.data.some((b: any) => b.name === 'Orbit SaaS'));
+
+    server.close();
+  });
+
+  it('12. GET /api/portfolios should return portfolio items with rich filters', async () => {
+    const server = app.listen(0);
+    const port = server.address().port;
+
+    const res = await fetch(`http://localhost:${port}/api/portfolios?category=Voice%20AI`);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.success, true);
+    assert.ok(data.count >= 1);
+    assert.ok(data.data[0].creator_name);
+
+    server.close();
+  });
+
+  it('13. POST /api/briefs/recommend should return evidence-based ranked creator recommendations', async () => {
+    const server = app.listen(0);
+    const port = server.address().port;
+
+    const res = await fetch(`http://localhost:${port}/api/briefs/recommend`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        description: 'Need generative film commercial with fashion models',
+        industry: 'Fashion & Luxury',
+        preferred_skills: ['Generative Film', 'Fashion'],
+        budget: 5000,
+      }),
+    });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.success, true);
+    assert.ok(data.count >= 10);
+    assert.ok(data.data[0].score >= 70);
+    assert.ok(data.data[0].reasons.length > 0);
+
+    server.close();
+  });
 });
+

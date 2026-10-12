@@ -157,18 +157,107 @@ export class CreatorService {
     return updated;
   }
 
-  public static async addPortfolio(creatorUserId: string, data: { title: string; description?: string; media_url: string; media_type?: string; tags?: string[] }) {
+  public static async addPortfolio(
+    creatorUserId: string, 
+    data: { 
+      title: string; 
+      description?: string; 
+      media_url: string; 
+      media_type?: string; 
+      tags?: string[];
+      thumbnail_url?: string;
+      project_url?: string;
+      file_size?: number;
+      mime_type?: string;
+      visibility?: string;
+    }
+  ) {
     const db = getDb();
     const id = require('uuid').v4();
     const now = new Date().toISOString();
 
     db.prepare(`
-      INSERT INTO portfolios (id, creator_id, title, description, media_url, media_type, tags, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(id, creatorUserId, data.title, data.description || null, data.media_url, data.media_type || 'image', JSON.stringify(data.tags || []), now, now);
+      INSERT INTO portfolios (
+        id, creator_id, title, description, media_url, media_type, tags, 
+        thumbnail_url, project_url, file_size, mime_type, visibility, 
+        created_at, updated_at
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      id, 
+      creatorUserId, 
+      data.title, 
+      data.description || null, 
+      data.media_url, 
+      data.media_type || 'image', 
+      JSON.stringify(data.tags || []),
+      data.thumbnail_url || null,
+      data.project_url || null,
+      data.file_size || 0,
+      data.mime_type || null,
+      data.visibility || 'public',
+      now, 
+      now
+    );
 
     const row = db.prepare('SELECT * FROM portfolios WHERE id = ?').get(id) as any;
     row.tags = JSON.parse(row.tags || '[]');
     return row;
+  }
+
+  public static async updatePortfolio(
+    portfolioId: string, 
+    creatorUserId: string, 
+    data: Partial<{
+      title: string;
+      description: string;
+      media_url: string;
+      media_type: string;
+      tags: string[];
+      thumbnail_url: string;
+      project_url: string;
+      visibility: string;
+    }>
+  ) {
+    const db = getDb();
+    const existing = db.prepare('SELECT * FROM portfolios WHERE id = ?').get(portfolioId) as any;
+    if (!existing) {
+      throw new Error('Portfolio item not found');
+    }
+    if (existing.creator_id !== creatorUserId) {
+      throw new Error('Unauthorized to modify this portfolio item');
+    }
+
+    const sets: string[] = [];
+    const values: any[] = [];
+    if (data.title !== undefined) { sets.push('title = ?'); values.push(data.title); }
+    if (data.description !== undefined) { sets.push('description = ?'); values.push(data.description); }
+    if (data.media_url !== undefined) { sets.push('media_url = ?'); values.push(data.media_url); }
+    if (data.media_type !== undefined) { sets.push('media_type = ?'); values.push(data.media_type); }
+    if (data.tags !== undefined) { sets.push('tags = ?'); values.push(JSON.stringify(data.tags)); }
+    if (data.thumbnail_url !== undefined) { sets.push('thumbnail_url = ?'); values.push(data.thumbnail_url); }
+    if (data.project_url !== undefined) { sets.push('project_url = ?'); values.push(data.project_url); }
+    if (data.visibility !== undefined) { sets.push('visibility = ?'); values.push(data.visibility); }
+
+    sets.push("updated_at = datetime('now')");
+    values.push(portfolioId);
+
+    db.prepare(`UPDATE portfolios SET ${sets.join(', ')} WHERE id = ?`).run(...values);
+    const updated = db.prepare('SELECT * FROM portfolios WHERE id = ?').get(portfolioId) as any;
+    updated.tags = JSON.parse(updated.tags || '[]');
+    return updated;
+  }
+
+  public static async deletePortfolio(portfolioId: string, creatorUserId: string) {
+    const db = getDb();
+    const existing = db.prepare('SELECT * FROM portfolios WHERE id = ?').get(portfolioId) as any;
+    if (!existing) {
+      throw new Error('Portfolio item not found');
+    }
+    if (existing.creator_id !== creatorUserId) {
+      throw new Error('Unauthorized to delete this portfolio item');
+    }
+    db.prepare('DELETE FROM portfolios WHERE id = ?').run(portfolioId);
+    return { success: true, message: 'Portfolio item deleted successfully' };
   }
 }

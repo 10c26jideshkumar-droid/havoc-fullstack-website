@@ -121,6 +121,44 @@ export function runMigrations(): void {
       updated_at TEXT DEFAULT (datetime('now'))
     );
 
+    -- 10. Brands Table
+    CREATE TABLE IF NOT EXISTS brands (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      logo_url TEXT,
+      industry TEXT NOT NULL,
+      description TEXT NOT NULL,
+      location TEXT NOT NULL,
+      website TEXT,
+      founded TEXT,
+      team_size TEXT,
+      campaign_requirements TEXT DEFAULT '[]',
+      budget_range TEXT,
+      preferred_categories TEXT DEFAULT '[]',
+      contact_email TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+
+    -- 11. Chat Conversations
+    CREATE TABLE IF NOT EXISTS chat_conversations (
+      id TEXT PRIMARY KEY,
+      user_id TEXT,
+      title TEXT NOT NULL,
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now'))
+    );
+
+    -- 12. Chat Messages
+    CREATE TABLE IF NOT EXISTS chat_messages (
+      id TEXT PRIMARY KEY,
+      conversation_id TEXT NOT NULL REFERENCES chat_conversations(id) ON DELETE CASCADE,
+      role TEXT NOT NULL CHECK(role IN ('user','assistant','system')),
+      content TEXT NOT NULL,
+      attachments TEXT DEFAULT '[]',
+      created_at TEXT DEFAULT (datetime('now'))
+    );
+
     -- Indexes
     CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
     CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
@@ -137,7 +175,37 @@ export function runMigrations(): void {
     CREATE INDEX IF NOT EXISTS idx_picks_brand ON saved_picks(brand_id);
     CREATE INDEX IF NOT EXISTS idx_invites_brand ON interview_invites(brand_id);
     CREATE INDEX IF NOT EXISTS idx_invites_creator ON interview_invites(creator_id);
+    CREATE INDEX IF NOT EXISTS idx_brands_industry ON brands(industry);
+    CREATE INDEX IF NOT EXISTS idx_chat_conv_user ON chat_conversations(user_id);
+    CREATE INDEX IF NOT EXISTS idx_chat_msg_conv ON chat_messages(conversation_id);
   `);
+
+  // Safe table alterations for existing portfolios table
+  try {
+    db.exec(`
+      ALTER TABLE portfolios ADD COLUMN thumbnail_url TEXT;
+    `);
+  } catch (e) {}
+  try {
+    db.exec(`
+      ALTER TABLE portfolios ADD COLUMN project_url TEXT;
+    `);
+  } catch (e) {}
+  try {
+    db.exec(`
+      ALTER TABLE portfolios ADD COLUMN file_size INTEGER DEFAULT 0;
+    `);
+  } catch (e) {}
+  try {
+    db.exec(`
+      ALTER TABLE portfolios ADD COLUMN mime_type TEXT;
+    `);
+  } catch (e) {}
+  try {
+    db.exec(`
+      ALTER TABLE portfolios ADD COLUMN visibility TEXT DEFAULT 'public';
+    `);
+  } catch (e) {}
 
   console.log('SQLite schema created successfully.');
 }

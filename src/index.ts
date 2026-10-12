@@ -13,6 +13,11 @@ import chatRoutes from './routes/chatRoutes';
 import { errorHandler } from './middlewares/error';
 import { seedDatabase } from './db/seed';
 
+import brandRoutes from './routes/brandRoutes';
+import portfolioRoutes from './routes/portfolioRoutes';
+import path from 'path';
+import fs from 'fs';
+
 export const createApp = (): Application => {
   const app = express();
 
@@ -65,8 +70,11 @@ export const createApp = (): Application => {
       endpoints: {
         auth: ['POST /api/auth/signup', 'POST /api/auth/signin', 'GET /api/auth/me'],
         creators: ['GET /api/creators', 'GET /api/creators/:id', 'PUT /api/creators/profile', 'POST /api/creators/portfolio'],
-        briefs: ['POST /api/briefs', 'GET /api/briefs', 'GET /api/briefs/:id', 'POST /api/briefs/:id/match'],
+        brands: ['GET /api/brands', 'GET /api/brands/:id', 'POST /api/brands'],
+        portfolios: ['GET /api/portfolios', 'GET /api/portfolios/:id'],
+        briefs: ['POST /api/briefs', 'GET /api/briefs', 'GET /api/briefs/:id', 'POST /api/briefs/:id/match', 'POST /api/briefs/recommend'],
         picks: ['POST /api/picks', 'GET /api/picks', 'POST /api/invites'],
+        chat: ['POST /api/chat'],
       },
     });
   });
@@ -78,11 +86,67 @@ export const createApp = (): Application => {
 
   apiRouter.use('/auth', authRoutes);
   apiRouter.use('/creators', creatorRoutes);
+  apiRouter.use('/brands', brandRoutes);
+  apiRouter.use('/portfolios', portfolioRoutes);
   apiRouter.use('/briefs', briefRoutes);
   apiRouter.use('/chat', chatRoutes);
   apiRouter.use('/', pickRoutes);
 
   app.use('/api', apiRouter);
+
+  // File Upload Endpoint (local disk storage with size and type validation)
+  const uploadDir = path.join(__dirname, '../public/uploads');
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+
+  apiRouter.post('/upload', (req: Request, res: Response) => {
+    try {
+      const { filename, content, mimeType } = req.body;
+      if (!filename || !content) {
+        res.status(400).json({ success: false, error: 'Filename and base64 content are required' });
+        return;
+      }
+
+      // Check max size (50MB limit)
+      const base64Data = content.replace(/^data:([A-Za-z-+/]+);base64,/, '');
+      const buffer = Buffer.from(base64Data, 'base64');
+      if (buffer.length > 50 * 1024 * 1024) {
+        res.status(400).json({ success: false, error: 'File size exceeds maximum 50MB limit' });
+        return;
+      }
+
+      // Sanitize extension
+      const ext = path.extname(filename).toLowerCase();
+      const safeExtensions = [
+        '.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg',
+        '.mp4', '.webm', '.mov', '.mp3', '.wav', '.m4a', '.ogg',
+        '.pdf', '.docx', '.pptx', '.xlsx', '.csv', '.txt',
+        '.json', '.zip', '.html', '.htm'
+      ];
+      if (!safeExtensions.includes(ext)) {
+        res.status(400).json({ success: false, error: `File type ${ext} is not permitted` });
+        return;
+      }
+
+      const { v4: uuidv4 } = require('uuid');
+      const safeName = `${Date.now()}-${uuidv4()}${ext}`;
+      const filePath = path.join(uploadDir, safeName);
+      fs.writeFileSync(filePath, buffer);
+
+      const publicUrl = `/uploads/${safeName}`;
+      res.status(200).json({
+        success: true,
+        url: publicUrl,
+        filename: safeName,
+        originalName: filename,
+        size: buffer.length,
+        mimeType: mimeType || 'application/octet-stream'
+      });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message || 'File upload failed' });
+    }
+  });
 
   // Fallback 404 handler for unmatched API routes
   app.use('/api/*', (req: Request, res: Response) => {
@@ -92,7 +156,82 @@ export const createApp = (): Application => {
     });
   });
 
-  // Proxy all frontend pages and assets dynamically from Lovable
+  // First check local static public directory (e.g. customized assets, audio, scripts)
+  const publicDir = path.join(__dirname, '../public');
+  app.use(express.static(publicDir));
+
+  // Serve Home page locally
+  app.get('/', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'index.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve Explore Creators directory locally
+  app.get('/creators', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'creators.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve Brand space directory locally
+  app.get('/brand', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'brand.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve Creator Studio locally
+  app.get('/studio', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'studio.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve Sign In locally
+  app.get('/sign-in', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'sign-in.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve Get Started locally
+  app.get('/get-started', (req: Request, res: Response, next) => {
+    const filePath = path.join(publicDir, 'get-started.html');
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Serve individual creator profile HTML pages locally
+  app.get('/creators/:slug', (req: Request, res: Response, next) => {
+    const slug = req.params.slug;
+    const filePath = path.join(publicDir, `creator-${slug}.html`);
+    if (fs.existsSync(filePath)) {
+      res.sendFile(filePath);
+      return;
+    }
+    next();
+  });
+
+  // Proxy remaining frontend pages and assets dynamically from Lovable
   app.use(
     '/',
     createProxyMiddleware({

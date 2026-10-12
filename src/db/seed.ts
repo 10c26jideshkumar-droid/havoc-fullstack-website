@@ -111,6 +111,23 @@ export async function seedDatabase(): Promise<void> {
         b.created_at || new Date().toISOString(), new Date().toISOString()
       );
     }
+
+    // -- Brands --
+    if (tables.brands && Array.isArray(tables.brands)) {
+      const insertBrand = db.prepare(`
+        INSERT OR IGNORE INTO brands (id, name, logo_url, industry, description, location, website, founded, team_size, campaign_requirements, budget_range, preferred_categories, contact_email, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      for (const br of tables.brands) {
+        insertBrand.run(
+          br.id, br.name, br.logo_url || null, br.industry, br.description,
+          br.location, br.website || null, br.founded || null, br.team_size || null,
+          toJson(br.campaign_requirements), br.budget_range || null,
+          toJson(br.preferred_categories), br.contact_email || null,
+          new Date().toISOString(), new Date().toISOString()
+        );
+      }
+    }
   });
 
   insertAll();
@@ -120,8 +137,9 @@ export async function seedDatabase(): Promise<void> {
   const creatorCount = (db.prepare('SELECT COUNT(*) as count FROM creator_profiles').get() as any).count;
   const portfolioCount = (db.prepare('SELECT COUNT(*) as count FROM portfolios').get() as any).count;
   const briefCount = (db.prepare('SELECT COUNT(*) as count FROM briefs').get() as any).count;
+  const brandCount = (db.prepare('SELECT COUNT(*) as count FROM brands').get() as any).count;
 
-  console.log(`SQLite seeded: ${userCount} users, ${creatorCount} creators, ${portfolioCount} portfolios, ${briefCount} briefs.`);
+  console.log(`SQLite seeded: ${userCount} users, ${creatorCount} creators, ${portfolioCount} portfolios, ${briefCount} briefs, ${brandCount} brands.`);
 }
 
 if (require.main === module) {

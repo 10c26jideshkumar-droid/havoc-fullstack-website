@@ -61,6 +61,95 @@ export class MatchingService {
     return { score: totalScore, explanation: explanation.trim(), matchedSkills };
   }
 
+  public static async recommendCreatorsForCampaign(campaign: {
+    description?: string;
+    industry?: string;
+    target_audience?: string;
+    budget?: number;
+    preferred_skills?: string[];
+    content_format?: string;
+    goals?: string;
+  }) {
+    const db = getDb();
+    const creators = await CreatorService.listCreators({});
+    const skills = (campaign.preferred_skills || []).map(s => s.toLowerCase());
+    const descText = `${campaign.description || ''} ${campaign.industry || ''} ${campaign.content_format || ''} ${campaign.goals || ''} ${campaign.target_audience || ''}`.toLowerCase();
+
+    const scored = creators.map((creator: any) => {
+      // Get creator's actual portfolio items
+      const portfolios = db.prepare('SELECT * FROM portfolios WHERE creator_id = ?').all(creator.user_id) as any[];
+      const creatorSkills = (creator.specializations || []).map((s: string) => s.toLowerCase());
+
+      // 1. Skill overlap
+      const matchedSkills = (creator.specializations || []).filter((s: string) => {
+        const lower = s.toLowerCase();
+        return skills.some(req => req.includes(lower) || lower.includes(req)) || descText.includes(lower);
+      });
+
+      // 2. Portfolio evidence
+      const relevantPortfolios = portfolios.filter(p => {
+        const title = (p.title || '').toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        const tags = JSON.parse(p.tags || '[]').map((t: string) => t.toLowerCase());
+        return (
+          tags.some((t: string) => skills.includes(t) || descText.includes(t)) ||
+          matchedSkills.some((ms: string) => title.includes(ms.toLowerCase()) || desc.includes(ms.toLowerCase())) ||
+          (campaign.content_format && (p.media_type === campaign.content_format.toLowerCase() || title.includes(campaign.content_format.toLowerCase())))
+        );
+      });
+
+      // 3. Budget alignment
+      const packages = db.prepare('SELECT * FROM creator_packages WHERE creator_id = ?').all(creator.user_id) as any[];
+      const minPackagePrice = packages.length > 0 ? Math.min(...packages.map(p => p.price)) : (creator.hourly_rate * 10);
+      const fitsBudget = campaign.budget ? minPackagePrice <= campaign.budget : true;
+
+      // 4. Scoring logic
+      let score = 45;
+      if (skills.length > 0) {
+        score += Math.min(35, (matchedSkills.length / Math.max(1, skills.length)) * 35);
+      } else if (matchedSkills.length > 0) {
+        score += Math.min(30, matchedSkills.length * 10);
+      }
+      if (relevantPortfolios.length > 0) {
+        score += Math.min(15, relevantPortfolios.length * 6);
+      }
+      if (fitsBudget) score += 5;
+      if (creator.availability_status === 'available') score += 5;
+      score = Math.min(99, Math.round(score + ((creator.rating - 4.5) * 8)));
+
+      // 5. Evidence-based explanation reasons
+      const reasons: string[] = [];
+      if (matchedSkills.length > 0) {
+        reasons.push(`Mastery in verified skills: ${matchedSkills.join(', ')} directly matching your campaign.`);
+      }
+      if (relevantPortfolios.length > 0) {
+        reasons.push(`Proven portfolio evidence: "${relevantPortfolios[0].title}" (${relevantPortfolios[0].media_type || 'project'}).`);
+      }
+      if (campaign.budget) {
+        reasons.push(fitsBudget
+          ? `Budget match: Package tiers start from $${minPackagePrice}, within your $${campaign.budget} target.`
+          : `Package starting rate is $${minPackagePrice} ($${creator.hourly_rate}/hr).`
+        );
+      }
+      reasons.push(`Maintains a ${creator.rating}★ client review rating with ${creator.availability_status === 'available' ? 'immediate availability' : 'busy schedule'}.`);
+
+      return {
+        creator,
+        score,
+        matched_skills: matchedSkills,
+        portfolio_evidence: relevantPortfolios.map(p => ({
+          id: p.id,
+          title: p.title,
+          media_url: p.media_url,
+          media_type: p.media_type,
+        })),
+        reasons,
+      };
+    });
+
+    return scored.sort((a, b) => b.score - a.score);
+  }
+
   public static async runMatchingForBrief(briefId: string): Promise<ScoredMatchResult[]> {
     const db = getDb();
     const brief = db.prepare('SELECT * FROM briefs WHERE id = ?').get(briefId) as any;

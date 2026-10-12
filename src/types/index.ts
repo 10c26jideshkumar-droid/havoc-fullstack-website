@@ -120,6 +120,24 @@ export interface InterviewInvite {
   brief?: Brief;
 }
 
+export interface Brand {
+  id: string;
+  name: string;
+  logo_url?: string | null;
+  industry: string;
+  description: string;
+  location: string;
+  website?: string | null;
+  founded?: string | null;
+  team_size?: string | null;
+  campaign_requirements?: string[];
+  budget_range?: string | null;
+  preferred_categories?: string[];
+  contact_email?: string | null;
+  created_at?: Date | string;
+  updated_at?: Date | string;
+}
+
 export interface AuthTokenPayload {
   userId: string;
   email: string;

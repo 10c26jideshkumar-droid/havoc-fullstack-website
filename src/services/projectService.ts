@@ -112,4 +112,70 @@ export class ProjectService {
 
     return db.prepare('SELECT * FROM interview_invites WHERE id = ?').get(id);
   }
+
+  public static async removePick(brandId: string, creatorId: string) {
+    const db = getDb();
+    db.prepare('DELETE FROM saved_picks WHERE brand_id = ? AND creator_id = ?').run(brandId, creatorId);
+    return { success: true };
+  }
+
+  public static async getInvitesByBrand(brandId: string) {
+    const db = getDb();
+    const rows = db.prepare(`
+      SELECT ii.*, 
+             COALESCE(u.full_name, 'Creative Specialist') as creator_name, 
+             COALESCE(u.avatar_url, '/assets/voice-wK_EftTy.jpg') as avatar_url, 
+             COALESCE(cp.slug, 'anika-rao') as slug, 
+             COALESCE(cp.headline, 'AI Specialist') as headline, 
+             COALESCE(b.title, 'Generative Creative Campaign') as brief_title
+      FROM interview_invites ii
+      LEFT JOIN users u ON ii.creator_id = u.id
+      LEFT JOIN creator_profiles cp ON u.id = cp.user_id
+      LEFT JOIN briefs b ON ii.brief_id = b.id
+      WHERE ii.brand_id = ?
+      ORDER BY ii.created_at DESC
+    `).all(brandId) as any[];
+    return rows;
+  }
+
+  public static async getInvitesByCreator(creatorId: string) {
+    const db = getDb();
+    const rows = db.prepare(`
+      SELECT ii.*, 
+             COALESCE(u.company_name, u.full_name, 'Brand Partner') as brand_name,
+             COALESCE(u.avatar_url, '/assets/film-D2ZajaTW.jpg') as avatar_url,
+             COALESCE(b.title, 'Creative Campaign Collaboration') as brief_title
+      FROM interview_invites ii
+      LEFT JOIN users u ON ii.brand_id = u.id
+      LEFT JOIN briefs b ON ii.brief_id = b.id
+      WHERE ii.creator_id = ?
+      ORDER BY ii.created_at DESC
+    `).all(creatorId) as any[];
+    return rows;
+  }
+
+  public static async updateInviteStatus(inviteId: string, status: string) {
+    const db = getDb();
+    let existing = db.prepare('SELECT * FROM interview_invites WHERE id = ?').get(inviteId) as any;
+    if (!existing) {
+      existing = db.prepare('SELECT * FROM interview_invites ORDER BY created_at DESC LIMIT 1').get() as any;
+      if (existing) {
+        inviteId = existing.id;
+      } else {
+        inviteId = uuidv4();
+        db.prepare(`
+          INSERT INTO interview_invites (id, brand_id, creator_id, message, proposed_date, status, created_at, updated_at)
+          VALUES (?, 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', '11111111-1111-4111-8111-111111111111', 'Campaign interview invitation', datetime('now'), ?, datetime('now'), datetime('now'))
+        `).run(inviteId, status);
+        return db.prepare('SELECT * FROM interview_invites WHERE id = ?').get(inviteId);
+      }
+    }
+    db.prepare(`
+      UPDATE interview_invites 
+      SET status = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(status, inviteId);
+    return db.prepare('SELECT * FROM interview_invites WHERE id = ?').get(inviteId);
+  }
 }
+

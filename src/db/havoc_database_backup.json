@@ -72,6 +72,42 @@
         "company_name": "Lumen Beauty",
         "created_at": "2026-01-01T10:00:00.000Z",
         "updated_at": "2026-01-01T10:00:00.000Z"
+      },
+      {
+        "id": "77777777-7777-4777-8777-777777777777",
+        "email": "zara@havoc.ai",
+        "role": "creator",
+        "full_name": "Zara Chen",
+        "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+        "created_at": "2026-02-15T10:00:00.000Z",
+        "updated_at": "2026-02-15T10:00:00.000Z"
+      },
+      {
+        "id": "88888888-8888-4888-8888-888888888888",
+        "email": "vikram@havoc.ai",
+        "role": "creator",
+        "full_name": "Vikram Patel",
+        "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
+        "created_at": "2026-02-18T10:00:00.000Z",
+        "updated_at": "2026-02-18T10:00:00.000Z"
+      },
+      {
+        "id": "99999999-9999-4999-8999-999999999999",
+        "email": "elena@havoc.ai",
+        "role": "creator",
+        "full_name": "Elena Rostova",
+        "avatar_url": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+        "created_at": "2026-02-20T10:00:00.000Z",
+        "updated_at": "2026-02-20T10:00:00.000Z"
+      },
+      {
+        "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "email": "marcus@havoc.ai",
+        "role": "creator",
+        "full_name": "Marcus Vance",
+        "avatar_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+        "created_at": "2026-02-22T10:00:00.000Z",
+        "updated_at": "2026-02-22T10:00:00.000Z"
       }
     ],
     "creator_profiles": [
@@ -198,6 +234,88 @@
           "Marathi"
         ],
         "availability_status": "available"
+      },
+      {
+        "user_id": "77777777-7777-4777-8777-777777777777",
+        "slug": "zara-chen",
+        "headline": "AI Video & VFX Artist",
+        "bio": "Crafting hyper-realistic AI video commercials, VFX world extensions, and high-impact social motion graphics.",
+        "location": "Singapore",
+        "hourly_rate": 110,
+        "rating": 4.9,
+        "verified": true,
+        "specializations": [
+          "AI Video",
+          "Generative Film",
+          "AI Image Generation"
+        ],
+        "languages": [
+          "English",
+          "Mandarin"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "88888888-8888-4888-8888-888888888888",
+        "slug": "vikram-patel",
+        "headline": "LLM Integration & AI Agents Specialist",
+        "bio": "Designing enterprise-grade autonomous customer workflows, multi-agent orchestrations, and fine-tuned RAG pipelines.",
+        "location": "Hyderabad, India",
+        "hourly_rate": 90,
+        "rating": 4.8,
+        "verified": true,
+        "specializations": [
+          "AI Agents",
+          "LLM Integration",
+          "Chatbots",
+          "Prompt Engineering"
+        ],
+        "languages": [
+          "English",
+          "Hindi",
+          "Telugu"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "99999999-9999-4999-8999-999999999999",
+        "slug": "elena-rostova",
+        "headline": "3D Generative & Virtual Worlds Artist",
+        "bio": "Pioneering generative NeRFs, 3D product visualizer environments, and cinematic spatial fashion experiences.",
+        "location": "Berlin, Germany",
+        "hourly_rate": 130,
+        "rating": 4.9,
+        "verified": true,
+        "specializations": [
+          "AI Image Generation",
+          "Fashion",
+          "Generative Film"
+        ],
+        "languages": [
+          "German",
+          "English",
+          "Russian"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "slug": "marcus-vance",
+        "headline": "Prompt Engineer & Creative Director",
+        "bio": "Leading multinational creative brand campaigns with precision prompt engineering, custom LoRAs, and multi-modal storytelling.",
+        "location": "San Francisco, USA",
+        "hourly_rate": 105,
+        "rating": 4.7,
+        "verified": true,
+        "specializations": [
+          "Prompt Engineering",
+          "AI Video",
+          "Voice AI"
+        ],
+        "languages": [
+          "English"
+        ],
+        "availability_status": "available"
       }
     ],
     "portfolios": [
@@ -270,6 +388,177 @@
         "tags": [
           "Chatbots"
         ]
+      },
+      {
+        "id": "p-7",
+        "creator_id": "77777777-7777-4777-8777-777777777777",
+        "title": "Cyberpunk Hyperdrive Commercial",
+        "description": "30-second futuristic sports car launch film rendered with cutting-edge diffusion video pipelines.",
+        "media_url": "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "video",
+        "tags": [
+          "AI Video",
+          "Generative Film"
+        ]
+      },
+      {
+        "id": "p-8",
+        "creator_id": "77777777-7777-4777-8777-777777777777",
+        "title": "Holographic Neon Fashion Reel",
+        "description": "Dynamic neon-drenched apparel visualizer with consistent face geometry.",
+        "media_url": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "image",
+        "tags": [
+          "Fashion",
+          "AI Video"
+        ]
+      },
+      {
+        "id": "p-9",
+        "creator_id": "88888888-8888-4888-8888-888888888888",
+        "title": "Fintech Multi-Agent Support Orchestrator",
+        "description": "Autonomous financial agent squad resolving transaction queries with 94% automation.",
+        "media_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "project",
+        "tags": [
+          "AI Agents",
+          "LLM Integration"
+        ]
+      },
+      {
+        "id": "p-10",
+        "creator_id": "88888888-8888-4888-8888-888888888888",
+        "title": "Omnichannel Voice Concierge",
+        "description": "Bilingual voice-to-text automated order resolution system handling 5k calls daily.",
+        "media_url": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "video",
+        "tags": [
+          "Chatbots",
+          "Voice AI"
+        ]
+      },
+      {
+        "id": "p-11",
+        "creator_id": "99999999-9999-4999-8999-999999999999",
+        "title": "Surrealist Metaverse Architecture",
+        "description": "Generative architectural environments rendered in 8K resolution for luxury real estate.",
+        "media_url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "image",
+        "tags": [
+          "AI Image Generation",
+          "Generative Film"
+        ]
+      },
+      {
+        "id": "p-12",
+        "creator_id": "99999999-9999-4999-8999-999999999999",
+        "title": "Haute Couture Digital Twin Runway",
+        "description": "Generative digital twin garments tailored with dynamic cloth simulation.",
+        "media_url": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "video",
+        "tags": [
+          "Fashion",
+          "AI Image Generation"
+        ]
+      },
+      {
+        "id": "p-13",
+        "creator_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "title": "Aura Sound & Voice Brand Identity",
+        "description": "End-to-end synthetic audio brand signature with emotional voice modulation.",
+        "media_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "project",
+        "tags": [
+          "Voice AI",
+          "Prompt Engineering"
+        ]
+      },
+      {
+        "id": "p-14",
+        "creator_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "title": "Global Retail Prompt Book & LoRA Library",
+        "description": "Comprehensive design system with 50+ calibrated prompt templates for global D2C brands.",
+        "media_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        "media_type": "image",
+        "tags": [
+          "Prompt Engineering",
+          "AI Video"
+        ]
+      },
+      {
+        "id": "p-anika-voice-reel",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "title": "Multilingual Conversational Audio Agent",
+        "description": "Autonomous enterprise voice agent handling conversational refunds and queries with sub-300ms latency.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        "media_type": "video",
+        "tags": [
+          "Voice AI",
+          "LLM Integration",
+          "Chatbots"
+        ]
+      },
+      {
+        "id": "p-leo-cinematic-film",
+        "creator_id": "22222222-2222-4222-8222-222222222222",
+        "title": "Chronos — 4K Generative Sci-Fi Trailer",
+        "description": "Award-winning festival trailer combining generative diffusion video with neural character animation.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "media_type": "video",
+        "tags": [
+          "Generative Film",
+          "AI Video"
+        ]
+      },
+      {
+        "id": "p-mei-fashion-motion",
+        "creator_id": "33333333-3333-4333-8333-333333333333",
+        "title": "Digital Runway & Consistent Model Reel",
+        "description": "Dynamic runway video capturing fabric drape and lighting across 15 seasonal looks.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "media_type": "video",
+        "tags": [
+          "Fashion",
+          "AI Video",
+          "AI Image Generation"
+        ]
+      },
+      {
+        "id": "p-kiran-concierge-reel",
+        "creator_id": "44444444-4444-4444-8444-444444444444",
+        "title": "Omnichannel Hospitality AI Concierge",
+        "description": "End-to-end interactive guest booking interface lifting conversion by 28%.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        "media_type": "video",
+        "tags": [
+          "Chatbots",
+          "LLM Integration"
+        ]
+      },
+      {
+        "id": "p-sofia-agent-workflow",
+        "creator_id": "55555555-5555-4555-8555-555555555555",
+        "title": "Autonomous Research & Growth Engine",
+        "description": "Multi-agent orchestration analyzing competitor ad spend and generating weekly executive briefings.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        "media_type": "video",
+        "tags": [
+          "AI Agents",
+          "LLM Integration"
+        ]
+      },
+      {
+        "id": "p-arjun-product-commercial",
+        "creator_id": "66666666-6666-4666-8666-666666666666",
+        "title": "Luxe Parfum Generative Commercial",
+        "description": "Hyper-surreal 3D bottle fluid dynamics and botanical bloom sequences for luxury D2C launch.",
+        "media_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+        "media_type": "video",
+        "tags": [
+          "AI Video",
+          "AI Image Generation",
+          "Fashion"
+        ]
       }
     ],
     "reviews": [
@@ -299,6 +588,42 @@
         "rating": 5,
         "review_text": "Cinematic quality on a startup budget.",
         "review_date": "Jul 2026"
+      },
+      {
+        "id": "r-4",
+        "creator_id": "77777777-7777-4777-8777-777777777777",
+        "brand_name": "Apex Motors",
+        "author_name": "David W.",
+        "rating": 5,
+        "review_text": "Zara delivered a jaw-dropping automotive launch video. Visual fidelity exceeded our expectations.",
+        "review_date": "Sep 2026"
+      },
+      {
+        "id": "r-5",
+        "creator_id": "88888888-8888-4888-8888-888888888888",
+        "brand_name": "Northwind Bank",
+        "author_name": "Siddharth M.",
+        "rating": 5,
+        "review_text": "Vikram integrated our banking copilot securely and flawlessly. Response latency dropped 45%.",
+        "review_date": "Aug 2026"
+      },
+      {
+        "id": "r-6",
+        "creator_id": "99999999-9999-4999-8999-999999999999",
+        "brand_name": "Kira Studio",
+        "author_name": "Kenji T.",
+        "rating": 5,
+        "review_text": "Elena’s 3D generative renders brought our Tokyo fashion week showcase to life with extraordinary detail.",
+        "review_date": "Oct 2026"
+      },
+      {
+        "id": "r-7",
+        "creator_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "brand_name": "Orbit SaaS",
+        "author_name": "Amanda K.",
+        "rating": 4.8,
+        "review_text": "Marcus is a prompt wizard. Saved months of trial and error for our creative marketing campaign.",
+        "review_date": "Sep 2026"
       }
     ],
     "packages": [
@@ -337,6 +662,78 @@
           "15s film",
           "2 revisions"
         ]
+      },
+      {
+        "id": "pkg-4",
+        "creator_id": "77777777-7777-4777-8777-777777777777",
+        "name": "Teaser Reel",
+        "price": 1800,
+        "delivery_time": "7 days",
+        "features": [
+          "15s 4K video",
+          "Custom sound design",
+          "3 revisions"
+        ]
+      },
+      {
+        "id": "pkg-5",
+        "creator_id": "77777777-7777-4777-8777-777777777777",
+        "name": "Brand Campaign Video",
+        "price": 4800,
+        "delivery_time": "14 days",
+        "features": [
+          "60s narrative film",
+          "Full VFX compositing",
+          "Multiple aspect ratios"
+        ]
+      },
+      {
+        "id": "pkg-6",
+        "creator_id": "88888888-8888-4888-8888-888888888888",
+        "name": "Agent Prototype",
+        "price": 1200,
+        "delivery_time": "5 days",
+        "features": [
+          "Custom workflow agent",
+          "API webhook integration",
+          "Documentation"
+        ]
+      },
+      {
+        "id": "pkg-7",
+        "creator_id": "88888888-8888-4888-8888-888888888888",
+        "name": "Enterprise Agent Suite",
+        "price": 3600,
+        "delivery_time": "18 days",
+        "features": [
+          "Multi-agent orchestration",
+          "Vector DB & RAG",
+          "Testing harness & observability"
+        ]
+      },
+      {
+        "id": "pkg-8",
+        "creator_id": "99999999-9999-4999-8999-999999999999",
+        "name": "Virtual Lookbook",
+        "price": 2200,
+        "delivery_time": "10 days",
+        "features": [
+          "8 high-definition 3D stills",
+          "Interactive 360 viewer",
+          "Lighting variants"
+        ]
+      },
+      {
+        "id": "pkg-9",
+        "creator_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "name": "Creative Prompt Kit",
+        "price": 1400,
+        "delivery_time": "6 days",
+        "features": [
+          "25 tuned prompt pipelines",
+          "Negative prompt libraries",
+          "Staff training workshop"
+        ]
       }
     ],
     "briefs": [
@@ -371,6 +768,128 @@
       }
     ],
     "saved_picks": [],
-    "interview_invites": []
+    "interview_invites": [],
+    "brands": [
+      {
+        "id": "brand-1",
+        "name": "Lumen Beauty",
+        "logo_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+        "industry": "Beauty & Personal Care",
+        "description": "D2C skincare brand known for clean formulas and bold, playful campaigns across India.",
+        "location": "Mumbai, India",
+        "website": "lumenbeauty.in",
+        "founded": "2019",
+        "team_size": "48 people",
+        "campaign_requirements": [
+          "Festive generative films",
+          "Bilingual AI voice customer support",
+          "AI serum lookbooks"
+        ],
+        "budget_range": ",000 - ,000",
+        "preferred_categories": [
+          "Voice AI",
+          "AI Video",
+          "AI Image Generation",
+          "Generative Film"
+        ],
+        "contact_email": "brand@lumen.com"
+      },
+      {
+        "id": "brand-2",
+        "name": "Northwind Bank",
+        "logo_url": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=300&q=80",
+        "industry": "Fintech & Banking",
+        "description": "Digital-first retail banking group modernizing financial literacy and customer support through AI agents.",
+        "location": "London, United Kingdom",
+        "website": "northwindbank.co.uk",
+        "founded": "2016",
+        "team_size": "240 people",
+        "campaign_requirements": [
+          "Multilingual conversational loan assistant",
+          "Enterprise security guardrails",
+          "Voice customer care"
+        ],
+        "budget_range": ",000 - ,000",
+        "preferred_categories": [
+          "Voice AI",
+          "AI Agents",
+          "Chatbots",
+          "LLM Integration"
+        ],
+        "contact_email": "ai-partners@northwindbank.co.uk"
+      },
+      {
+        "id": "brand-3",
+        "name": "Zesto Foods",
+        "logo_url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80",
+        "industry": "Quick-Commerce & F&B",
+        "description": "Ultra-fast organic grocery and gourmet cloud kitchen brand operating across major metropolitan hubs.",
+        "location": "Bengaluru, India",
+        "website": "zestofoods.in",
+        "founded": "2021",
+        "team_size": "95 people",
+        "campaign_requirements": [
+          "Regional vernacular voice order bot",
+          "Dynamic food video ads",
+          "Automated refund resolution"
+        ],
+        "budget_range": ",000 - ,000",
+        "preferred_categories": [
+          "Voice AI",
+          "AI Video",
+          "Chatbots",
+          "LLM Integration"
+        ],
+        "contact_email": "marketing@zestofoods.in"
+      },
+      {
+        "id": "brand-4",
+        "name": "Kira Studio",
+        "logo_url": "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=300&q=80",
+        "industry": "High Fashion & Luxury",
+        "description": "Avant-garde contemporary apparel house crafting digital twins, interactive runways, and metaverse collections.",
+        "location": "Tokyo, Japan",
+        "website": "kirastudio.jp",
+        "founded": "2018",
+        "team_size": "32 people",
+        "campaign_requirements": [
+          "Consistent-model seasonal lookbooks",
+          "Virtual runway 3D simulation",
+          "Short-form social loops"
+        ],
+        "budget_range": ",000 - ,000",
+        "preferred_categories": [
+          "Fashion",
+          "AI Image Generation",
+          "Generative Film",
+          "AI Video"
+        ],
+        "contact_email": "collaborations@kirastudio.jp"
+      },
+      {
+        "id": "brand-5",
+        "name": "Orbit SaaS",
+        "logo_url": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=300&q=80",
+        "industry": "B2B Enterprise AI Platform",
+        "description": "Workforce acceleration platform building AI copilots and automated enterprise intelligence dashboards.",
+        "location": "New York, USA",
+        "website": "orbitsaas.ai",
+        "founded": "2020",
+        "team_size": "110 people",
+        "campaign_requirements": [
+          "Autonomous outreach agent team",
+          "Product explainer video",
+          "Technical UX writing & prompt docs"
+        ],
+        "budget_range": ",000 - ,000",
+        "preferred_categories": [
+          "AI Agents",
+          "LLM Integration",
+          "Prompt Engineering",
+          "AI Video"
+        ],
+        "contact_email": "growth@orbitsaas.ai"
+      }
+    ]
   }
 }
