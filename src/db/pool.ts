@@ -1,19 +1,21 @@
-import { Pool } from 'pg';
-import { config } from '../config';
+import Database from 'better-sqlite3';
+import path from 'path';
 
-// Initialize PostgreSQL connection pool
-export const pool = new Pool({
-  connectionString: config.databaseUrl,
-  ssl: process.env.DATABASE_SSL === 'true' || config.databaseUrl.includes('supabase.co')
-    ? { rejectUnauthorized: false }
-    : false,
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 5000,
-});
+const DB_PATH = path.join(__dirname, '..', '..', 'havoc.db');
 
-pool.on('error', (err) => {
-  console.error('Unexpected PG client error on idle client:', err);
-});
+let db: Database.Database;
 
-export const query = (text: string, params?: any[]) => pool.query(text, params);
+export function getDb(): Database.Database {
+  if (!db) {
+    db = new Database(DB_PATH);
+    db.pragma('journal_mode = WAL');
+    db.pragma('foreign_keys = ON');
+  }
+  return db;
+}
+
+export function closeDb(): void {
+  if (db) {
+    db.close();
+  }
+}

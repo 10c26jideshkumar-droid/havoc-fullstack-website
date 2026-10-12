@@ -11,7 +11,7 @@ import creatorRoutes from './routes/creatorRoutes';
 import briefRoutes from './routes/briefRoutes';
 import pickRoutes from './routes/pickRoutes';
 import { errorHandler } from './middlewares/error';
-import { seedMockData } from './db/seed';
+import { seedDatabase } from './db/seed';
 
 export const createApp = (): Application => {
   const app = express();
@@ -115,8 +115,8 @@ export const createApp = (): Application => {
 export const startServer = async () => {
   const app = createApp();
 
-  // Pre-seed mock data for immediate developer use
-  await seedMockData();
+  // Initialize & seed SQLite database
+  await seedDatabase();
 
   app.listen(config.port, () => {
     console.log(`=================================================`);

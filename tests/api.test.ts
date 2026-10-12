@@ -1,7 +1,7 @@
 import { describe, it, before } from 'node:test';
 import assert from 'node:assert';
 import { createApp } from '../src/index';
-import { seedMockData } from '../src/db/seed';
+import { seedDatabase } from '../src/db/seed';
 
 let app: any;
 let brandToken: string;
@@ -12,7 +12,7 @@ let creatorUserId: string;
 describe('HAVOC Production API Integration Test Suite', () => {
   before(async () => {
     app = createApp();
-    await seedMockData();
+    await seedDatabase();
   });
 
   it('1. GET /health should return 200 OK with server health info', async () => {

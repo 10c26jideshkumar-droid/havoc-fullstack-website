@@ -1,13 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import bcrypt from 'bcryptjs';
-import { pool } from './pool';
-import { memoryStore } from './memoryStore';
-import { AuthService } from '../services/authService';
+import { v4 as uuidv4 } from 'uuid';
+import { getDb } from './pool';
+import { runMigrations } from './migrate';
 
-export const seedMockData = async () => {
-  console.log('Loading database backup & seeds into HAVOC...');
+export async function seedDatabase(): Promise<void> {
+  // Ensure tables exist
+  runMigrations();
 
+  const db = getDb();
+  const defaultPassword = 'Password123!';
+  const passwordHash = await bcrypt.hash(defaultPassword, 10);
+
+  // Load backup data
   const backupPath = path.join(__dirname, 'havoc_database_backup.json');
   if (!fs.existsSync(backupPath)) {
     console.warn('Backup file not found at:', backupPath);
@@ -18,125 +24,109 @@ export const seedMockData = async () => {
   const backup = JSON.parse(raw);
   const tables = backup.tables;
 
-  const defaultPassword = 'Password123!';
-  const defaultPasswordHash = await bcrypt.hash(defaultPassword, 10);
-  const now = new Date().toISOString();
+  // Helper: JSON-encode arrays for SQLite TEXT columns
+  const toJson = (arr: any[]) => JSON.stringify(arr || []);
 
-  // 1. Populate MemoryStore first
-  // Users
-  for (const u of tables.users) {
-    memoryStore.users.set(u.id, {
-      id: u.id,
-      email: u.email,
-      password_hash: defaultPasswordHash,
-      role: u.role,
-      full_name: u.full_name,
-      avatar_url: u.avatar_url,
-      company_name: u.company_name || null,
-      created_at: u.created_at || now,
-      updated_at: u.updated_at || now,
-    });
-  }
-
-  // Creator Profiles
-  for (const cp of tables.creator_profiles) {
-    memoryStore.creatorProfiles.set(cp.user_id, {
-      user_id: cp.user_id,
-      slug: cp.slug || null,
-      headline: cp.headline,
-      bio: cp.bio || null,
-      location: cp.location || null,
-      hourly_rate: Number(cp.hourly_rate),
-      rating: Number(cp.rating),
-      verified: cp.verified || false,
-      specializations: cp.specializations || [],
-      languages: cp.languages || [],
-      availability_status: cp.availability_status || 'available',
-      created_at: now,
-      updated_at: now,
-    });
-  }
-
-  // Portfolios
-  for (const p of tables.portfolios) {
-    memoryStore.portfolios.set(p.id, {
-      id: p.id,
-      creator_id: p.creator_id,
-      title: p.title,
-      description: p.description || null,
-      media_url: p.media_url,
-      media_type: p.media_type || 'image',
-      tags: p.tags || [],
-      created_at: now,
-      updated_at: now,
-    });
-  }
-
-  // Reviews
-  for (const r of tables.reviews) {
-    memoryStore.reviews.set(r.id, {
-      id: r.id,
-      creator_id: r.creator_id,
-      brand_name: r.brand_name,
-      author_name: r.author_name,
-      rating: Number(r.rating),
-      review_text: r.review_text,
-      review_date: r.review_date || null,
-      created_at: now,
-    });
-  }
-
-  // Packages
-  for (const pkg of tables.packages) {
-    memoryStore.packages.set(pkg.id, {
-      id: pkg.id,
-      creator_id: pkg.creator_id,
-      name: pkg.name,
-      price: Number(pkg.price),
-      delivery_time: pkg.delivery_time || null,
-      features: pkg.features || [],
-      created_at: now,
-    });
-  }
-
-  // Briefs
-  for (const b of tables.briefs) {
-    memoryStore.briefs.set(b.id, {
-      id: b.id,
-      brand_id: b.brand_id,
-      title: b.title,
-      description: b.description,
-      required_specializations: b.required_specializations || [],
-      budget_range: b.budget_range || null,
-      max_budget: b.max_budget ? Number(b.max_budget) : null,
-      status: b.status || 'open',
-      created_at: b.created_at || now,
-      updated_at: now,
-    });
-  }
-
-  console.log(`Memory store populated with ${memoryStore.users.size} users, ${memoryStore.creatorProfiles.size} creators, ${memoryStore.portfolios.size} portfolios, ${memoryStore.briefs.size} briefs.`);
-
-  // 2. If Postgres is reachable, apply seeds
-  const isDb = await AuthService.testDb();
-  if (isDb) {
-    console.log('PostgreSQL connection detected. Applying SQL seeds...');
-    const sqlPath = path.join(__dirname, 'havoc_database_schema_and_seeds.sql');
-    if (fs.existsSync(sqlPath)) {
-      try {
-        const sqlContent = fs.readFileSync(sqlPath, 'utf8');
-        await pool.query(sqlContent);
-        console.log('SQL schema & seeds executed on Postgres/Supabase successfully.');
-      } catch (err) {
-        console.error('Error executing SQL seed file on Postgres:', err);
-      }
+  // Use a transaction for speed and atomicity
+  const insertAll = db.transaction(() => {
+    // -- Users --
+    const insertUser = db.prepare(`
+      INSERT OR IGNORE INTO users (id, email, password_hash, role, full_name, avatar_url, company_name, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const u of tables.users) {
+      insertUser.run(
+        u.id, u.email, passwordHash, u.role, u.full_name,
+        u.avatar_url || null, u.company_name || null,
+        u.created_at || new Date().toISOString(), u.updated_at || new Date().toISOString()
+      );
     }
-  }
-};
+
+    // -- Creator Profiles --
+    const insertCreator = db.prepare(`
+      INSERT OR IGNORE INTO creator_profiles 
+        (user_id, slug, headline, bio, location, hourly_rate, rating, verified, specializations, languages, availability_status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const cp of tables.creator_profiles) {
+      insertCreator.run(
+        cp.user_id, cp.slug || null, cp.headline, cp.bio || null,
+        cp.location || null, cp.hourly_rate, cp.rating,
+        cp.verified ? 1 : 0,
+        toJson(cp.specializations), toJson(cp.languages),
+        cp.availability_status || 'available',
+        new Date().toISOString(), new Date().toISOString()
+      );
+    }
+
+    // -- Portfolios --
+    const insertPortfolio = db.prepare(`
+      INSERT OR IGNORE INTO portfolios (id, creator_id, title, description, media_url, media_type, tags, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const p of tables.portfolios) {
+      insertPortfolio.run(
+        p.id, p.creator_id, p.title, p.description || null,
+        p.media_url, p.media_type || 'image', toJson(p.tags),
+        new Date().toISOString(), new Date().toISOString()
+      );
+    }
+
+    // -- Reviews --
+    const insertReview = db.prepare(`
+      INSERT OR IGNORE INTO creator_reviews (id, creator_id, brand_name, author_name, rating, review_text, review_date, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const r of tables.reviews) {
+      insertReview.run(
+        r.id, r.creator_id, r.brand_name, r.author_name,
+        r.rating, r.review_text, r.review_date || null,
+        new Date().toISOString()
+      );
+    }
+
+    // -- Packages --
+    const insertPackage = db.prepare(`
+      INSERT OR IGNORE INTO creator_packages (id, creator_id, name, price, delivery_time, features, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const pkg of tables.packages) {
+      insertPackage.run(
+        pkg.id, pkg.creator_id, pkg.name, pkg.price,
+        pkg.delivery_time || null, toJson(pkg.features),
+        new Date().toISOString()
+      );
+    }
+
+    // -- Briefs --
+    const insertBrief = db.prepare(`
+      INSERT OR IGNORE INTO briefs (id, brand_id, title, description, required_specializations, budget_range, max_budget, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    for (const b of tables.briefs) {
+      insertBrief.run(
+        b.id, b.brand_id, b.title, b.description,
+        toJson(b.required_specializations), b.budget_range || null,
+        b.max_budget || null, b.status || 'open',
+        b.created_at || new Date().toISOString(), new Date().toISOString()
+      );
+    }
+  });
+
+  insertAll();
+
+  // Verify
+  const userCount = (db.prepare('SELECT COUNT(*) as count FROM users').get() as any).count;
+  const creatorCount = (db.prepare('SELECT COUNT(*) as count FROM creator_profiles').get() as any).count;
+  const portfolioCount = (db.prepare('SELECT COUNT(*) as count FROM portfolios').get() as any).count;
+  const briefCount = (db.prepare('SELECT COUNT(*) as count FROM briefs').get() as any).count;
+
+  console.log(`SQLite seeded: ${userCount} users, ${creatorCount} creators, ${portfolioCount} portfolios, ${briefCount} briefs.`);
+}
 
 if (require.main === module) {
-  seedMockData().then(() => {
-    console.log('Seed execution completed.');
+  seedDatabase().then(() => {
+    console.log('Seed complete.');
     process.exit(0);
   });
 }

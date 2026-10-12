@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DE3RlOCf.js";import{t}from"./AuthForm-iC16WjwP.js";var n=e(),r=()=>(0,n.jsx)(t,{mode:`signin`});export{r as component};
