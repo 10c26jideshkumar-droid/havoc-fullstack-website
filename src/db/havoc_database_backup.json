@@ -1,0 +1,376 @@
+{
+  "metadata": {
+    "project": "HAVOC - AI-native creator marketplace",
+    "version": "1.0.0",
+    "exported_at": "2026-10-12T13:31:45.508Z",
+    "supabase_project_ref": "onfpbpurkyvkrsczsrbu",
+    "target_bucket": "jk",
+    "target_path": "havoc"
+  },
+  "tables": {
+    "users": [
+      {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "email": "anika@havoc.ai",
+        "role": "creator",
+        "full_name": "Anika Rao",
+        "avatar_url": "/assets/voice-wK_EftTy.jpg",
+        "created_at": "2026-01-10T10:00:00.000Z",
+        "updated_at": "2026-01-10T10:00:00.000Z"
+      },
+      {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "email": "leo@havoc.ai",
+        "role": "creator",
+        "full_name": "Leo Marchetti",
+        "avatar_url": "/assets/film-D2ZajaTW.jpg",
+        "created_at": "2026-01-12T10:00:00.000Z",
+        "updated_at": "2026-01-12T10:00:00.000Z"
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "email": "mei@havoc.ai",
+        "role": "creator",
+        "full_name": "Mei Tanaka",
+        "avatar_url": "/assets/fashion-D9rghXxZ.jpg",
+        "created_at": "2026-01-15T10:00:00.000Z",
+        "updated_at": "2026-01-15T10:00:00.000Z"
+      },
+      {
+        "id": "44444444-4444-4444-8444-444444444444",
+        "email": "kiran@havoc.ai",
+        "role": "creator",
+        "full_name": "Kiran Das",
+        "avatar_url": "/assets/chatbot-D5BS4HUv.jpg",
+        "created_at": "2026-01-20T10:00:00.000Z",
+        "updated_at": "2026-01-20T10:00:00.000Z"
+      },
+      {
+        "id": "55555555-5555-4555-8555-555555555555",
+        "email": "sofia@havoc.ai",
+        "role": "creator",
+        "full_name": "Sofia Alvarez",
+        "avatar_url": "/assets/agent-CSMXJPRd.jpg",
+        "created_at": "2026-02-01T10:00:00.000Z",
+        "updated_at": "2026-02-01T10:00:00.000Z"
+      },
+      {
+        "id": "66666666-6666-4666-8666-666666666666",
+        "email": "arjun@havoc.ai",
+        "role": "creator",
+        "full_name": "Arjun Mehta",
+        "avatar_url": "/assets/product-DMwkbJiI.jpg",
+        "created_at": "2026-02-05T10:00:00.000Z",
+        "updated_at": "2026-02-05T10:00:00.000Z"
+      },
+      {
+        "id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "email": "brand@lumen.com",
+        "role": "brand",
+        "full_name": "Lumen Beauty Team",
+        "avatar_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80",
+        "company_name": "Lumen Beauty",
+        "created_at": "2026-01-01T10:00:00.000Z",
+        "updated_at": "2026-01-01T10:00:00.000Z"
+      }
+    ],
+    "creator_profiles": [
+      {
+        "user_id": "11111111-1111-4111-8111-111111111111",
+        "slug": "anika-rao",
+        "headline": "Voice AI engineer",
+        "bio": "I build multilingual voice agents that sound human and resolve real customer issues. 6 years in speech tech, 40+ deployed agents.",
+        "location": "Bengaluru, India",
+        "hourly_rate": 85,
+        "rating": 4.9,
+        "verified": true,
+        "specializations": [
+          "Voice AI",
+          "LLM Integration",
+          "Chatbots",
+          "Prompt Engineering"
+        ],
+        "languages": [
+          "English",
+          "Hindi",
+          "Kannada"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "22222222-2222-4222-8222-222222222222",
+        "slug": "leo-marchetti",
+        "headline": "Generative filmmaker",
+        "bio": "Director blending generative video and live action. My shorts have screened at 12 festivals.",
+        "location": "Milan, Italy",
+        "hourly_rate": 120,
+        "rating": 4.8,
+        "verified": true,
+        "specializations": [
+          "Generative Film",
+          "AI Video",
+          "Storyboarding"
+        ],
+        "languages": [
+          "Italian",
+          "English"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "33333333-3333-4333-8333-333333333333",
+        "slug": "mei-tanaka",
+        "headline": "AI fashion image artist",
+        "bio": "Consistent-model AI lookbooks for fashion and beauty brands. Former studio photographer.",
+        "location": "Tokyo, Japan",
+        "hourly_rate": 95,
+        "rating": 4.9,
+        "verified": true,
+        "specializations": [
+          "AI Image Generation",
+          "Fashion",
+          "Prompt Engineering"
+        ],
+        "languages": [
+          "Japanese",
+          "English"
+        ],
+        "availability_status": "busy"
+      },
+      {
+        "user_id": "44444444-4444-4444-8444-444444444444",
+        "slug": "kiran-das",
+        "headline": "Conversational AI designer",
+        "bio": "I design chatbots that convert — travel, retail and D2C. Strong on flows and LLM guardrails.",
+        "location": "Kolkata, India",
+        "hourly_rate": 70,
+        "rating": 4.7,
+        "verified": false,
+        "specializations": [
+          "Chatbots",
+          "LLM Integration",
+          "UX Writing"
+        ],
+        "languages": [
+          "English",
+          "Bengali",
+          "Hindi"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "55555555-5555-4555-8555-555555555555",
+        "slug": "sofia-alvarez",
+        "headline": "AI agent architect",
+        "bio": "Autonomous agents for operations and marketing teams — research, reporting and outreach.",
+        "location": "Madrid, Spain",
+        "hourly_rate": 140,
+        "rating": 4.8,
+        "verified": true,
+        "specializations": [
+          "AI Agents",
+          "LLM Integration",
+          "Prompt Engineering"
+        ],
+        "languages": [
+          "Spanish",
+          "English"
+        ],
+        "availability_status": "available"
+      },
+      {
+        "user_id": "66666666-6666-4666-8666-666666666666",
+        "slug": "arjun-mehta",
+        "headline": "AI product visual artist",
+        "bio": "Surreal product visuals and ad creatives for beauty and D2C brands.",
+        "location": "Mumbai, India",
+        "hourly_rate": 60,
+        "rating": 4.6,
+        "verified": false,
+        "specializations": [
+          "AI Image Generation",
+          "AI Video",
+          "Fashion"
+        ],
+        "languages": [
+          "Hindi",
+          "English",
+          "Marathi"
+        ],
+        "availability_status": "available"
+      }
+    ],
+    "portfolios": [
+      {
+        "id": "p-1",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "title": "Saathi — bilingual support voice agent",
+        "description": "Demo call of a Hindi/English support agent handling refunds end-to-end.",
+        "media_url": "/assets/voice-wK_EftTy.jpg",
+        "media_type": "video",
+        "tags": [
+          "Voice AI",
+          "Support"
+        ]
+      },
+      {
+        "id": "p-2",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "title": "Voice persona moodboard",
+        "description": "Visual identity for a calm banking voice persona.",
+        "media_url": "/assets/agent-CSMXJPRd.jpg",
+        "media_type": "image",
+        "tags": [
+          "Branding"
+        ]
+      },
+      {
+        "id": "p-3",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "title": "Telecom IVR replacement",
+        "description": "Replaced a 9-level IVR with an AI agent. Call time down 38%.",
+        "media_url": "/assets/chatbot-D5BS4HUv.jpg",
+        "media_type": "project",
+        "tags": [
+          "Voice AI",
+          "LLM Integration"
+        ]
+      },
+      {
+        "id": "p-4",
+        "creator_id": "22222222-2222-4222-8222-222222222222",
+        "title": "Monolith — generative short",
+        "description": "A 3-minute sci-fi short made entirely with generative video.",
+        "media_url": "/assets/film-D2ZajaTW.jpg",
+        "media_type": "video",
+        "tags": [
+          "Generative Film",
+          "AI Video"
+        ]
+      },
+      {
+        "id": "p-5",
+        "creator_id": "33333333-3333-4333-8333-333333333333",
+        "title": "Lavender Silk lookbook",
+        "description": "12-look lookbook with a single consistent AI model.",
+        "media_url": "/assets/fashion-D9rghXxZ.jpg",
+        "media_type": "image",
+        "tags": [
+          "Fashion",
+          "AI Image Generation"
+        ]
+      },
+      {
+        "id": "p-6",
+        "creator_id": "44444444-4444-4444-8444-444444444444",
+        "title": "Concierge chat for travel site",
+        "description": "Booking assistant that lifted conversions 22%.",
+        "media_url": "/assets/chatbot-D5BS4HUv.jpg",
+        "media_type": "project",
+        "tags": [
+          "Chatbots"
+        ]
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r-1",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "brand_name": "Northwind Bank",
+        "author_name": "Priya M.",
+        "rating": 5,
+        "review_text": "Anika's agent handled 60% of calls on day one. Clear communication throughout.",
+        "review_date": "Aug 2026"
+      },
+      {
+        "id": "r-2",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "brand_name": "Zesto Foods",
+        "author_name": "Rahul K.",
+        "rating": 5,
+        "review_text": "Brilliant Hindi voice quality — customers didn't notice it was AI.",
+        "review_date": "Jun 2026"
+      },
+      {
+        "id": "r-3",
+        "creator_id": "22222222-2222-4222-8222-222222222222",
+        "brand_name": "Maison Lavande",
+        "author_name": "Claire D.",
+        "rating": 5,
+        "review_text": "Cinematic quality on a startup budget.",
+        "review_date": "Jul 2026"
+      }
+    ],
+    "packages": [
+      {
+        "id": "pkg-1",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "name": "Starter",
+        "price": 900,
+        "delivery_time": "7 days",
+        "features": [
+          "1 voice persona",
+          "Up to 5 intents",
+          "1 language"
+        ]
+      },
+      {
+        "id": "pkg-2",
+        "creator_id": "11111111-1111-4111-8111-111111111111",
+        "name": "Growth",
+        "price": 2400,
+        "delivery_time": "14 days",
+        "features": [
+          "Custom voice",
+          "Up to 20 intents",
+          "2 languages",
+          "Analytics"
+        ]
+      },
+      {
+        "id": "pkg-3",
+        "creator_id": "22222222-2222-4222-8222-222222222222",
+        "name": "Teaser",
+        "price": 1500,
+        "delivery_time": "10 days",
+        "features": [
+          "15s film",
+          "2 revisions"
+        ]
+      }
+    ],
+    "briefs": [
+      {
+        "id": "brief-1",
+        "brand_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "title": "Diwali campaign film",
+        "description": "A 30s generative film for our festive launch, dreamy and cinematic.",
+        "required_specializations": [
+          "Generative Film",
+          "AI Video"
+        ],
+        "budget_range": "$4000 - $6000",
+        "max_budget": 5000,
+        "status": "open",
+        "created_at": "2026-02-10T12:00:00.000Z"
+      },
+      {
+        "id": "brief-2",
+        "brand_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "title": "Hindi/English voice support",
+        "description": "A bilingual voice agent to answer order and skincare questions.",
+        "required_specializations": [
+          "Voice AI",
+          "LLM Integration",
+          "Chatbots"
+        ],
+        "budget_range": "$2000 - $3000",
+        "max_budget": 2500,
+        "status": "open",
+        "created_at": "2026-02-12T12:00:00.000Z"
+      }
+    ],
+    "saved_picks": [],
+    "interview_invites": []
+  }
+}
