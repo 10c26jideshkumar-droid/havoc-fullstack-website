@@ -17,7 +17,12 @@ export const createApp = (): Application => {
   const app = express();
 
   // Security Middlewares
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginEmbedderPolicy: false,
+    })
+  );
   app.use(
     cors({
       origin: '*', // Configure to Lovable domain or frontend origin in production
