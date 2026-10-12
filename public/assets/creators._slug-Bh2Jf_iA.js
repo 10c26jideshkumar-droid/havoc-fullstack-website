@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-DE3RlOCf.js";import{t}from"./link-CZ6lE1C5.js";var n=e(),r=()=>(0,n.jsxs)(`div`,{className:`py-24 text-center`,children:[(0,n.jsx)(`p`,{className:`text-lg font-semibold`,children:`Creator not found`}),(0,n.jsx)(t,{to:`/creators`,className:`text-primary`,children:`Back to creators`})]});export{r as notFoundComponent};

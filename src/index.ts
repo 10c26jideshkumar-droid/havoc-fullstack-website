@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes';
 import creatorRoutes from './routes/creatorRoutes';
 import briefRoutes from './routes/briefRoutes';
 import pickRoutes from './routes/pickRoutes';
+import chatRoutes from './routes/chatRoutes';
 import { errorHandler } from './middlewares/error';
 import { seedDatabase } from './db/seed';
 
@@ -78,6 +79,7 @@ export const createApp = (): Application => {
   apiRouter.use('/auth', authRoutes);
   apiRouter.use('/creators', creatorRoutes);
   apiRouter.use('/briefs', briefRoutes);
+  apiRouter.use('/chat', chatRoutes);
   apiRouter.use('/', pickRoutes);
 
   app.use('/api', apiRouter);
