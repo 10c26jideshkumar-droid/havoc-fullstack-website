@@ -261,4 +261,5 @@ All seeded accounts share the default development password: `Password123!`
   - `arjun@havoc.ai` (Arjun Mehta — AI Product Visual Artist)
 #   h a v o c - f u l l s t a c k - w e b s i t e  
  #   h a v o c - f u l l s t a c k - w e b s i t e  
+ #   h a v o c - f u l l s t a c k - w e b s i t e  
  
