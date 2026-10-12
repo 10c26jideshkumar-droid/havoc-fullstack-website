@@ -1,10 +1,9 @@
 import express, { Application, Request, Response } from 'express';
-import path from 'path';
-import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import { config } from './config';
 import authRoutes from './routes/authRoutes';
 import creatorRoutes from './routes/creatorRoutes';
@@ -25,25 +24,21 @@ export const createApp = (): Application => {
   );
   app.use(
     cors({
-      origin: '*', // Configure to Lovable domain or frontend origin in production
+      origin: '*',
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     })
   );
 
-  // Rate Limiting
+  // Rate Limiting for API routes only
   const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 200, // Limit each IP to 200 requests per window
+    windowMs: 15 * 60 * 1000,
+    max: 500,
     standardHeaders: true,
     legacyHeaders: false,
     message: { success: false, error: 'Too many requests, please try again later.' },
   });
   app.use('/api', limiter);
-
-  // Body Parsing
-  app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true }));
 
   // Logging
   if (config.nodeEnv !== 'test') {
@@ -75,55 +70,40 @@ export const createApp = (): Application => {
     });
   });
 
-  // Mount API Routers
-  app.use('/api/auth', authRoutes);
-  app.use('/api/creators', creatorRoutes);
-  app.use('/api/briefs', briefRoutes);
-  app.use('/api', pickRoutes);
+  // Mount API Routers (with body parsing strictly scoped to API routes)
+  const apiRouter = express.Router();
+  apiRouter.use(express.json({ limit: '10mb' }));
+  apiRouter.use(express.urlencoded({ extended: true }));
 
-  // Serve Frontend Static Assets
-  const publicDir = path.join(__dirname, '..', 'public');
-  app.use(express.static(publicDir));
+  apiRouter.use('/auth', authRoutes);
+  apiRouter.use('/creators', creatorRoutes);
+  apiRouter.use('/briefs', briefRoutes);
+  apiRouter.use('/', pickRoutes);
 
-  // SPA & SSR Route Handler: Serve exact page for route or fallback to index.html
-  app.get('*', (req: Request, res: Response, next) => {
-    if (req.path.startsWith('/api')) {
-      return next();
-    }
+  app.use('/api', apiRouter);
 
-    const cleanPath = req.path.replace(/^\/|\/$/g, '');
-
-    // 1. Creator Profile Pages (/creators/:slug)
-    if (cleanPath.startsWith('creators/')) {
-      const slug = cleanPath.split('/')[1];
-      const profilePath = path.join(publicDir, 'assets', `creators-${slug}.html`);
-      if (fs.existsSync(profilePath)) {
-        return res.sendFile(profilePath);
-      }
-    }
-
-    // 2. Specific App Routes (/creators, /brand, /studio, /sign-in, /get-started)
-    const routePage = path.join(publicDir, 'assets', `page-${cleanPath}.html`);
-    if (cleanPath && fs.existsSync(routePage)) {
-      return res.sendFile(routePage);
-    }
-
-    // 3. Fallback to Root index.html
-    const indexPath = path.join(publicDir, 'index.html');
-    if (fs.existsSync(indexPath)) {
-      return res.sendFile(indexPath);
-    }
-
-    next();
-  });
-
-  // 404 Route Handler for unmatched API endpoints
-  app.use((req: Request, res: Response) => {
+  // Fallback 404 handler for unmatched API routes
+  app.use('/api/*', (req: Request, res: Response) => {
     res.status(404).json({
       success: false,
       error: `Route not found: ${req.method} ${req.originalUrl}`,
     });
   });
+
+  // Proxy all frontend pages and assets dynamically from Lovable
+  app.use(
+    '/',
+    createProxyMiddleware({
+      target: 'https://vision-to-creator-connect.lovable.app',
+      changeOrigin: true,
+      ws: true,
+      on: {
+        proxyReq: (proxyReq) => {
+          proxyReq.setHeader('host', 'vision-to-creator-connect.lovable.app');
+        },
+      },
+    })
+  );
 
   // Global Error Handler
   app.use(errorHandler);
@@ -139,7 +119,8 @@ export const startServer = async () => {
 
   app.listen(config.port, () => {
     console.log(`=================================================`);
-    console.log(`🚀 HAVOC API Server running on port ${config.port}`);
+    console.log(`🚀 HAVOC Server running on port ${config.port}`);
+    console.log(`   Frontend & App: http://localhost:${config.port}/`);
     console.log(`   Health: http://localhost:${config.port}/health`);
     console.log(`   API Docs: http://localhost:${config.port}/api`);
     console.log(`=================================================`);
