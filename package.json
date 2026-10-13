@@ -11,6 +11,10 @@
     "db:migrate": "tsx src/db/migrate.ts",
     "test": "node --test dist/tests/**/*.test.js"
   },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true,
+    "esbuild@0.28.2": true
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^13.0.3",
