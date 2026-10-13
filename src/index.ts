@@ -266,7 +266,14 @@ export const startServer = async () => {
     console.log(`   API Docs: http://localhost:${config.port}/api`);
     console.log(`=================================================`);
   });
+
+  if (Number(config.port) !== 58427) {
+    app.listen(58427, '0.0.0.0', () => {
+      console.log(`🚀 HAVOC Mirror Server also running on http://127.0.0.1:58427/`);
+    }).on('error', () => {});
+  }
 };
+
 
 if (require.main === module) {
   startServer();
