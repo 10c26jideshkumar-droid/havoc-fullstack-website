@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -11,7 +11,7 @@ import briefRoutes from './routes/briefRoutes';
 import pickRoutes from './routes/pickRoutes';
 import chatRoutes from './routes/chatRoutes';
 import { errorHandler } from './middlewares/error';
-import { seedDatabase } from './db/seed';
+import { initializeDatabase } from './db/seed';
 
 import brandRoutes from './routes/brandRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
@@ -81,6 +81,14 @@ export const createApp = (): Application => {
 
   // Mount API Routers (with body parsing strictly scoped to API routes)
   const apiRouter = express.Router();
+  apiRouter.use(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await initializeDatabase();
+      next();
+    } catch (error) {
+      next(error);
+    }
+  });
   apiRouter.use(express.json({ limit: '10mb' }));
   apiRouter.use(express.urlencoded({ extended: true }));
 
@@ -257,7 +265,7 @@ export default app;
 
 export const startServer = async () => {
   // Initialize & seed SQLite database
-  await seedDatabase();
+  await initializeDatabase();
 
   app.listen(config.port, () => {
     console.log(`=================================================`);

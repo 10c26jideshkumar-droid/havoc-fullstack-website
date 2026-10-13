@@ -1,9 +1,20 @@
-import fs from 'fs';
-import path from 'path';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import { getDb } from './pool';
 import { runMigrations } from './migrate';
+import backup from './havoc_database_backup.json';
+
+let databaseInitialization: Promise<void> | undefined;
+
+export function initializeDatabase(): Promise<void> {
+  if (!databaseInitialization) {
+    databaseInitialization = seedDatabase().catch((error: unknown) => {
+      databaseInitialization = undefined;
+      throw error;
+    });
+  }
+  return databaseInitialization;
+}
 
 export async function seedDatabase(): Promise<void> {
   // Ensure tables exist
@@ -13,15 +24,6 @@ export async function seedDatabase(): Promise<void> {
   const defaultPassword = 'Password123!';
   const passwordHash = await bcrypt.hash(defaultPassword, 10);
 
-  // Load backup data
-  const backupPath = path.join(__dirname, 'havoc_database_backup.json');
-  if (!fs.existsSync(backupPath)) {
-    console.warn('Backup file not found at:', backupPath);
-    return;
-  }
-
-  const raw = fs.readFileSync(backupPath, 'utf8');
-  const backup = JSON.parse(raw);
   const tables = backup.tables;
 
   // Helper: JSON-encode arrays for SQLite TEXT columns

@@ -1,7 +1,12 @@
 import Database from 'better-sqlite3';
 import path from 'path';
+import os from 'os';
 
-const DB_PATH = path.join(__dirname, '..', '..', 'havoc.db');
+const DB_PATH = process.env.SQLITE_DB_PATH || (
+  process.env.VERCEL
+    ? path.join(os.tmpdir(), 'havoc.db')
+    : path.join(__dirname, '..', '..', 'havoc.db')
+);
 
 let db: Database.Database;
 
