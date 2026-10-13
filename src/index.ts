@@ -252,9 +252,10 @@ export const createApp = (): Application => {
   return app;
 };
 
-export const startServer = async () => {
-  const app = createApp();
+const app = createApp();
+export default app;
 
+export const startServer = async () => {
   // Initialize & seed SQLite database
   await seedDatabase();
 
@@ -273,7 +274,6 @@ export const startServer = async () => {
     }).on('error', () => {});
   }
 };
-
 
 if (require.main === module) {
   startServer();
